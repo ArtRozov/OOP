@@ -1,10 +1,10 @@
 # List and StackAllocator
-| Тип ограничений  | Конкретизация |
+| Type of restrictions | Specification |
 | ------------- | ------------- |
-| Ограничение времени | 10 секунд  |
-| Ограничение памяти  | 512Mb  |
-| Ввод  | 	стандартный ввод или input.txt  |
-| Вывод  | 	стандартный вывод или output.txt  |
+| Time limit | 10 seconds |
+| Memory limit | 512Mb |
+| Input | Standard input or input.txt |
+| Output | standard output or output.txt |
 
 ## Part 1.
 
