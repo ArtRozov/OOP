@@ -1,4 +1,4 @@
-# G. List and StackAllocator (C++ spring 2022)
+# G. List and StackAllocator
 | Тип ограничений  | Конкретизация |
 | ------------- | ------------- |
 | Ограничение времени | 10 секунд  |
@@ -6,29 +6,21 @@
 | Ввод  | 	стандартный ввод или input.txt  |
 | Вывод  | 	стандартный вывод или output.txt  |
 
-Предупреждение:\
-формально следующие задачи не будут зависеть от этой, то есть для получения баллов по любой из остальных задач не будет требоваться, чтобы эта задача была сдана.
-Однако код, написанный в этой задаче, пригодится для переиспользования в следующей задаче.
+## Part 1.
 
-В этой задаче вам предлагается научиться пользоваться аллокаторами, а также разобраться с устройством контейнера list и понять, что иногда нестандартный аллокатор может давать выигрыш в производительности по сравнению со стандартным.
+The StackAllocator<typename T, size_t N> class was written, which allows you to create standard containers on the stack, without a single access to dynamic memory.\
+For this, the StackStorage<size_t N> class was written, which stores a large array on the stack.
 
-## Часть 1.
+The StackAllocator class meets the allocator requirements described on the page https://en.cppreference.com/w/cpp/named_req/Allocator \
+It is STL-compatible, that is, it allows use as an allocator for standard containers.\
+In particular, defined:
 
-Напишите класс StackAllocator<typename T, size_t N>, который бы позволял создавать стандартные контейнеры на стеке, без единого обращения к динамической памяти.\
-Для этого вам пригодится написать класс StackStorage<size_t N>, в котором будет храниться большой массив на стеке.\
-Объект класса StackAllocator должен быть легковесным, легко копироваться и присваиваться.\
-Объект StackStorage, напротив, не должен поддерживать копирование.
+- Default constructor, copy constructor, destructor, assignment operator;
+- Allocate, deallocate methods;
+- Internal value_type type;
+- The select_on_container_copy_construction method, if the logic of your allocator requires it.
 
-Класс StackAllocator должен удовлетворять требованиям к аллокатору, описанным на странице https://en.cppreference.com/w/cpp/named_req/Allocator \
-Он должен быть STL-совместимым, то есть позволять использование в качестве аллокатора для стандартных контейнеров.\
-В частности, должны быть определены:
-
-- Конструктор по умолчанию, конструктор копирования, деструктор, оператор присваивания;
-- Методы allocate, deallocate;
-- Внутренний тип value_type;
-- Метод select_on_container_copy_construction, если логика работы вашего аллокатора этого потребует.
-
-Пример того, как может использоваться StackAllocator:
+An example of how StackAllocator can be used:
 ```c++
 int main() {
   StackStorage<100'000> storage;
@@ -37,38 +29,29 @@ int main() {
   // ... useful stuff ...
 }
 ```
-Во время исполнения может существовать несколько StackStorage с одним и тем же N.\
-Разумеется, аллокаторы, построенные на разных StackStorage, должны считаться неравными.
+During execution, there may be multiple stackstorages with the same N.\
+Of course, allocators built on different stackstorages should be considered unequal.
 
-StackAllocator должен заботиться о выравнивании объектов.\
-В частности, нельзя класть переменные типа int по адресам, не кратным 4; переменные типа double - по адресам, не кратным 8, и т.д..
+StackAllocator takes care of the alignment of objects.\
+In particular, it does not put variables of type int at addresses that are not multiples of 4; variables of type double - at addresses that are not multiples of 8, etc..
 
-Использование любого контейнера со StackAllocator вместо std::allocator должно приводить к тому, что обращений к динамической памяти в программе не происходит вообще.
+Using any container with StackAllocator instead of std::allocator leads to the fact that there are no calls to dynamic memory in the program at all.
 
-Проверьте себя: напишите тестирующую функцию, которая создает std::list и выполняет над ним последовательность случайных добавлений/удалений элементов.\
-Если вы все сделали правильно, то std::list со StackAllocator'ом должен работать быстрее, чем std::list со стандартным аллокатором.
+## Part 2.
+The List class is a doubly linked list with the correct use of the allocator (meets the requirements https://en.cppreference.com/w/cpp/named_req/AllocatorAwareContainer )\
+List has two template parameters: T is the type of elements in the sheet, Allocator is the type of allocator used (by default - std::allocator<T>).
 
-## Часть 2.
+Supported:
+- Constructors: without parameters; from one number; from a number and const T&; from one allocator; from a number and an allocator; from a number, const T& and an allocator.
+- The get_allocator() method, which returns the allocator object currently used in the sheet;
+- Copy constructor, destructor, copying assignment operator;
+- Size() method, working for O(1);
+- push_back, push_front, pop_back, pop_front methods;
+- Bidirectional iterators that meet the requirements https://en.cppreference.com/w/cpp/named_req/BidirectionalIterator .
+Also support constant and reverse iterators;
+- Methods begin, end, cbegin, cend, rbegin, rend, crbegin, crend;
+- Insert(iterator, const T&) and erase(iterator) methods - for deleting and adding single elements to the list.
 
-Напишите класс List - двусвязный список с правильным использованием аллокатора.\
-Правильное использование аллокатора означает, что ваш лист должен удовлетворять требованиям https://en.cppreference.com/w/cpp/named_req/AllocatorAwareContainer \
-Должно быть два шаблонных параметра: T - тип элементов в листе, Allocator - тип используемого аллокатора (по умолчанию - std::allocator<T>).
-
-Должны быть поддержаны:
-- Конструкторы: без параметров; от одного числа; от числа и const T&; от одного аллокатора; от числа и аллокатора; от числа, const T& и аллокатора.
-- Метод get_allocator(), возвращающий объект аллокатора, используемый в листе на данный момент;
-- Конструктор копирования, деструктор, копирующий оператор присваивания;
-- Метод size(), работающий за O(1);
-- Методы push_back, push_front, pop_back, pop_front;
-- Двунаправленные итераторы, удовлетворяющие требованиям https://en.cppreference.com/w/cpp/named_req/BidirectionalIterator.
-  Также поддержите константные и reverse-итераторы;
-- Методы begin, end, cbegin, cend, rbegin, rend, crbegin, crend;
-- Методы insert(iterator, const T&), а также erase(iterator) - для удаления и добавления одиночных элементов в список.
-
-Все методы листа должны быть строго безопасны относительно исключений.\
-Это означает, что при выбросе исключения из любого метода класса T во время произвольной операции X над листом лист должен вернуться в состояние, которое было до начала выполнения X, не допустив UB и утечек памяти, и пробросить исключение наверх в вызывающую функцию.
-Можно считать, что конструкторы и операторы присваивания у аллокаторов исключений никогда не кидают (это является частью требований к Allocator).
-
-Проверьте себя еще раз: выполните последовательность случайных добавлений-удалений элементов в List<int, StackAllocator<int, 100000>>. Работает ли это быстрее, чем для List<int, std::allocator<int>>?
-
-Как ваш собственный List, так и std::list должен показывать более высокую производительность со StackAllocator’ом, чем со стандартным аллокатором. В контесте это будет проверяться путем замеров времени выполнения большого количества однотипных операций над листом. Если ваш аллокатор проиграет по времени стандартному аллокатору, вы не пройдете тесты.
+All methods of the sheet are strictly safe with respect to exceptions.\
+This means that when an exception is thrown from any method of class T during an arbitrary operation X on a sheet, the sheet returns to the state it was before X started, preventing UB and memory leaks, and throws the exception up to the calling function.
+We believe that constructors and assignment operators for allocators never throw exceptions (this is part of the requirements for Allocator).
