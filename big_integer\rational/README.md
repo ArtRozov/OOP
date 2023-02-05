@@ -1,10 +1,10 @@
 # C. BigInteger+Rational
-| Тип ограничений  | Конкретизация |
+| Type of restrictions | Specification |
 | ------------- | ------------- |
-| Ограничение времени | 5 секунд  |
-| Ограничение памяти  | 64Mb  |
-| Ввод  | 	стандартный ввод или input.txt  |
-| Вывод  | 	стандартный вывод или output.txt  |
+| Time limit | 5 seconds |
+| Memory limit | 64Mb |
+| Input | Standard input or input.txt |
+| Output | standard output or output.txt |
 
 This is a BigInteger class for working with long integers. Supported operations:
 
