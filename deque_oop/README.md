@@ -1,10 +1,10 @@
 # Deque
-| Тип ограничений  | Конкретизация |
+| Type of restrictions | Specification |
 | ------------- | ------------- |
-| Ограничение времени | 2 секунды  |
-| Ограничение памяти  | 64Mb  |
-| Ввод  | 	стандартный ввод или input.txt  |
-| Вывод  | 	стандартный вывод или output.txt  |
+| Time limit | 2 seconds |
+| Memory limit | 64Mb |
+| Input | Standard input or input.txt |
+| Output | standard output or output.txt |
 
 Deque has the following functionality:
 
