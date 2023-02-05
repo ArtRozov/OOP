@@ -1,4 +1,4 @@
-# F. Deque (C++ spring 2022)
+# Deque (C++ spring 2022)
 | Тип ограничений  | Конкретизация |
 | ------------- | ------------- |
 | Ограничение времени | 2 секунды  |
@@ -6,38 +6,32 @@
 | Ввод  | 	стандартный ввод или input.txt  |
 | Вывод  | 	стандартный вывод или output.txt  |
 
-Если понадобится, в этой задаче можно использовать std::vector и std::array. Другие стандартные контейнеры использовать нельзя.
+Deque has the following functionality:
 
-Необходимо реализовать шаблонный класс Deque<T> - сильно упрощенный аналог класса std::deque<T>.
-Тип T не обязан иметь конструктор по умолчанию, чтобы его можно было хранить в Deque.
-
-Ваш Deque должен обладать следующей функциональностью:
-
-- Конструкторы: по умолчанию, конструктор копирования, конструктор от int, конструктор от (int, const T&). Оператор присваивания deque.
-- Метод size(), возвращающий текущий размер контейнера.
-- Обращение по индексу: квадратными скобками (без проверок выхода за границу) и at (кидающее std::out_of_range). Должно работать за гарантированное O(1).
-- Методы push_back, pop_back, push_front, pop_front. Должны работать за амортизированное O(1).
-- Должен быть внутренний тип iterator (с маленькой буквы, в лучших традициях STL). Этот тип, помимо очевидного, должен поддерживать:
-- Инкремент, декремент
-- Сложение с целыми числами
-- Сравнение < > <= >= == !=
-- Взятие разности двух итераторов
-- Разыменование (унарная звездочка), результатом является T&
-- Оператор ->, результатом является T*
-- Также должен быть константный итератор const_iterator. 
-  Отличие его от обычного iterator в том, что он не позволяет менять лежащий под ним элемент.
-  Конверсия (в том числе неявная) неконстантного итератора в константный допустима, обратно - нет.
-  Реализовать константный итератор надо так, чтобы его код не являлся копипастой кода обычного iterator.
-- Операции push_back, push_front, pop_back и pop_front должны не инвалидировать указатели и ссылки на остальные элементы дека.
-  Операции pop_back и pop_front, кроме того, должны еще и не инвалидировать итераторы.
-- Методы begin, cbegin, end и cend, возвращающие неконстантные и константные итераторы на начало и на “элемент после конца” контейнера соответственно.
-  Если сам контейнер константный, то методы begin и end тоже возвращают константные итераторы.
-  Декремент end должен давать итератор на последний элемент, вычитание целых чисел из end также должно корректно работать и давать итераторы на соответствующие элементы.
-- reverse-итераторы, а также методы rbegin, rend, crbegin, crend.
-- Метод insert(iterator, const T&), делающий вставку в контейнер по итератору.
-  Все элементы справа сдвигаются на один вправо, вставка работает линейное время.
-- Метод erase(iterator), удаляющий элемент из контейнера по итератору. 
-  Все элементы справа сдвигаются на один влево, удаление работает линейное время.
+- Constructors: by default, copy constructor, constructor from int, constructor from (int, const T&). The deque assignment operator.
+- The size() method, which returns the current size of the container.
+- Address by index: square brackets (without checks for going abroad) and at (throwing std::out_of_range). It should work for a guaranteed O(1).
+- push_back, pop_back, push_front, pop_front methods. Must work for amortized O(1).
+- There must be an internal iterator type (with a small letter, in the best traditions of STL). This type, in addition to the obvious, should support:
+- Increment, decrement
+- Addition with integers
+- Comparison < > <= >= == !=
+- Taking the difference of two iterators
+- Dereference (unary asterisk), the result is T&
+- Operator ->, the result is T*
+- There must also be a constant iterator const_iterator. 
+  Its difference from the usual iterator is that it does not allow you to change the element lying under it.
+  Conversion (including implicit) of a non-constant iterator to a constant one is acceptable, but not back.
+  It is necessary to implement a constant iterator so that its code is not a copy paste of the code of a regular iterator.
+- The push_back, push_front, pop_back and pop_front operations should not invalidate pointers and references to the rest of the deck elements.
+  The pop_back and pop_front operations, in addition, should also not invalidate iterators.
+- Methods begin, cbegin, end and cend, which return non-constant and constant iterators to the beginning and to the “element after the end" of the container, respectively.
+  If the container itself is constant, then the begin and end methods also return constant iterators.
+  The end decrement should give an iterator on the last element, the subtraction of integers from the end should also work correctly and give iterators on the corresponding elements.
+- reverse-iterators, as well as methods rbegin, rend, crbegin, crend.
+- The insert(iterator, const T&) method, which inserts into the container by iterator.
+  All elements on the right are shifted one to the right, the insertion works linear time.
+- The erase(iterator) method, which removes an element from the container by iterator. 
+  All elements on the right are shifted one to the left, the deletion works linear time.
   
-Все методы вашего Deque должны быть строго безопасны относительно исключений.
-Это значит, что в случае исключения в конструкторе или операторе присваивания типа T во время выполнения какого-либо метода дека, последний должен вернуться в исходное состояние, которое было до начала выполнения метода, и пробросить исключение наверх в вызывающий код.
+All methods of your Deque are strictly safe with respect to exceptions.
