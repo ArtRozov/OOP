@@ -1,4 +1,4 @@
-# C. BigInteger+Rational
+# BigInteger+Rational
 | Type of restrictions | Specification |
 | ------------- | ------------- |
 | Time limit | 5 seconds |
