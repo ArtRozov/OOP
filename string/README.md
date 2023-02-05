@@ -1,28 +1,25 @@
-# B. String (C++ fall 2021)
-| Тип ограничений  | Конкретизация |
+# String
+| Type of restrictions | Specification |
 | ------------- | ------------- |
-| Ограничение времени | 1 секунда  |
-| Ограничение памяти  | 64Mb  |
-| Ввод  | 	стандартный ввод или input.txt  |
-| Вывод  | 	стандартный вывод или output.txt  |
+| Time limit | 1 second |
+| Memory limit | 64Mb |
+| Input | Standard input or input.txt |
+| Output | standard output or output.txt |
 
-В этой задаче запрещено пользоваться какими-либо стандартными контейнерами.\
-Выделения памяти нужно делать вручную. Разрешается подключать только iostream и cstring.
+The String class is a simplified analogue of the library std::string. It is necessary to support the following functionality:
 
-Напишите класс String - упрощенный аналог библиотечного std::string. Необходимо поддержать следующий функционал:
-
-- Конструктор от C-style строки (const char*).
-- Конструктор от двух параметров: число n и символ c - создает строку из n копий символа c.
-- Конструктор по умолчанию, копирующий конструктор и оператор присваивания.
-- Оператор ==, позволяющий проверять строки на совпадение.
-- Квадратные скобки, корректно работающие как для константных, так и для неконстантных строк.
-- Метод length(), возвращающий размер строки.
-- Методы push_back(char) и pop_back(). Учетное время работы должно быть O(1).
-- Методы front() и back(), возвращающие ссылку на начальный и на последний символы строки соответственно.
-- Оператор +=, позволяющий добавить к строке символ или другую строку. Добавление символа должно работать за амортизированное O(1).
-- Оператор +, позволяющий складывать строки с символами, символы со строками и строки со строками.
-- Методы find(substring) и rfind(substring), позволяющие найти самое левое и самое правое вхождение подстроки substring в данную строку.
-  Возвращают индекс найденного вхождения. Если вхождений не найдено, нужно вернуть length() (фиктивный индекс).
-- Метод substr(start, count), возвращающий подстроку начиная с индекса start и состоящую из count символов.
-- Метод empty(), проверяющий, пуста ли строка. Метод clear(), позволяющий очистить строку.
-- Операторы вывода в поток « и ввода из потока ».
+- Constructor from the C-style string (const char*).
+- Constructor from two parameters: the number n and the symbol c - creates a string of n copies of the symbol c.
+- Default constructor, copying constructor and assignment operator.
+- The == operator, which allows checking strings for a match.
+- Square brackets that work correctly for both constant and non-constant strings.
+- The length() method, which returns the size of the string.
+- push_back(char) and pop_back() methods. The running time should be O(1).
+- Methods front() and back(), which return a reference to the initial and last characters of the string, respectively.
+- The += operator, which allows you to add a character or another string to a string. Adding a symbol should work for amortized O(1).
+- The + operator, which allows you to add strings with symbols, characters with strings and strings with strings.
+- The find(substring) and rfind(substring) methods, which allow you to find the leftmost and rightmost occurrence of the substring substring in this string.
+  Returns the index of the occurrence found. If no occurrences are found, you need to return length() (dummy index).
+- The substr(start, count) method, which returns a substring starting from the start index and consisting of count characters.
+- The empty() method, which checks whether the string is empty. The clear() method, which allows you to clear a string.
+- Operators of output to the stream " and input from the stream ".
